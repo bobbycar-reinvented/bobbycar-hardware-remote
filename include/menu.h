@@ -12,11 +12,13 @@ void connectToBobbycar(uint index);
 void resetScrollDisplay();
 void showConnected(uint index);
 String buildEmptyMessage();
+void calibrationScreen();
 
 class Menu
 {
 public:
-    uint getMenu() {
+    uint getMenu()
+    {
         return menu_index;
     }
 
@@ -38,6 +40,10 @@ public:
         case MENU_SELECT_BOBBYCAR:
             Serial.printf("%s => %s\n", bobbycar_names[MENU_SELECT_BOBBYCAR_INDEX].c_str(), bobbycar_uuids[MENU_SELECT_BOBBYCAR_INDEX].toString().c_str());
             connectToBobbycar(MENU_SELECT_BOBBYCAR_INDEX);
+            break;
+
+        case MENU_CALIBRASTE_ANALOG_STICKS:
+            calibrationScreen();
             break;
         }
     }
@@ -77,7 +83,6 @@ public:
         switch (menu_index)
         {
         case MENU_MAIN:
-            /* code */
             break;
 
         case MENU_SELECT_BOBBYCAR:
@@ -87,6 +92,10 @@ public:
                 update_menu(false);
             }
             break;
+
+        case MENU_CALIBRASTE_ANALOG_STICKS:
+            switchMenu(MENU_MAIN);
+            break;
         }
     }
 
@@ -95,7 +104,7 @@ public:
         switch (menu_index)
         {
         case MENU_MAIN:
-            /* code */
+            switchMenu(MENU_CALIBRASTE_ANALOG_STICKS);
             break;
 
         case MENU_SELECT_BOBBYCAR:
@@ -113,7 +122,8 @@ public:
         MENU_SELECT_BOBBYCAR_SCROLL = scroll;
     }
 
-    bool updateSticks() {
+    bool updateSticks()
+    {
         return (menu_index == MENU_CONNECTED_TO_BOBBYCAR);
     }
 
@@ -145,6 +155,14 @@ private:
         case MENU_CONNECTED_TO_BOBBYCAR:
             display.clear();
             showConnected(MENU_SELECT_BOBBYCAR_INDEX);
+            break;
+
+        case MENU_CALIBRASTE_ANALOG_STICKS:
+            display.clear();
+            display.setCursor(0, 0);
+            display.print("  Press confirm ");
+            display.setCursor(0, 1);
+            display.print("  to calibrate. ");
             break;
 
         default:

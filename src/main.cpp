@@ -498,18 +498,36 @@ void setup()
   delay(10);
 
   // NVS
+  display.setCursor(0, 0);
+  display.print("NVS...      ");
   NVS.begin();
   int fSteer = NVS.getInt("fSteer");
   int bSteer = NVS.getInt("bSteer");
   int fDrive = NVS.getInt("fDrive");
   int bDrive = NVS.getInt("bDrive");
 
-  if (fSteer == 0) {fSteer = 100;NVS.setInt("fSteer", 100);}
-  if (bSteer == 0) {bSteer = 0;  NVS.setInt("bSteer",   0);}
-  if (fDrive == 0) {fDrive = 75; NVS.setInt("fDrive",  75);}
-  if (bDrive == 0) {bDrive = 100;NVS.setInt("bDrive", 100);}
+  if (fSteer == 0)
+  {
+    fSteer = 100;
+    NVS.setInt("fSteer", 100);
+  }
+  if (bSteer == 0)
+  {
+    bSteer = 0;
+    NVS.setInt("bSteer", 0);
+  }
+  if (fDrive == 0)
+  {
+    fDrive = 75;
+    NVS.setInt("fDrive", 75);
+  }
+  if (bDrive == 0)
+  {
+    bDrive = 100;
+    NVS.setInt("bDrive", 100);
+  }
 
-// Load calibration
+  // Load calibration
   int lXMCal = NVS.getInt("lXMCal"); // lXM leftXMiddle
   int lXSCal = NVS.getInt("lXSCal"); // lXS leftXStart
   int lXECal = NVS.getInt("lXECal"); // lXE leftXEnd
@@ -526,21 +544,69 @@ void setup()
   int rYSCal = NVS.getInt("rYSCal");
   int rYECal = NVS.getInt("rYECal");
 
-  if (lXMCal == 0) {lXMCal = LEFT_ANALOG_X_MIDDLE; NVS.setInt("lXMCal", LEFT_ANALOG_X_MIDDLE);}
-  if (lXSCal == 0) {lXSCal = LEFT_ANALOG_X_START;  NVS.setInt("lXSCal", LEFT_ANALOG_X_START);}
-  if (lXECal == 0) {lXECal = LEFT_ANALOG_X_END;    NVS.setInt("lXECal", LEFT_ANALOG_X_END);}
+  if (lXMCal == 0)
+  {
+    lXMCal = LEFT_ANALOG_X_MIDDLE;
+    NVS.setInt("lXMCal", LEFT_ANALOG_X_MIDDLE);
+  }
+  if (lXSCal == 0)
+  {
+    lXSCal = LEFT_ANALOG_X_START;
+    NVS.setInt("lXSCal", LEFT_ANALOG_X_START);
+  }
+  if (lXECal == 0)
+  {
+    lXECal = LEFT_ANALOG_X_END;
+    NVS.setInt("lXECal", LEFT_ANALOG_X_END);
+  }
 
-  if (lYMCal == 0) {lYMCal = LEFT_ANALOG_Y_MIDDLE; NVS.setInt("lYMCal", LEFT_ANALOG_Y_MIDDLE);}
-  if (lYSCal == 0) {lYSCal = LEFT_ANALOG_Y_START;  NVS.setInt("lYSCal", LEFT_ANALOG_Y_START);}
-  if (lYECal == 0) {lYECal = LEFT_ANALOG_Y_END;    NVS.setInt("lYECal", LEFT_ANALOG_Y_END);}
+  if (lYMCal == 0)
+  {
+    lYMCal = LEFT_ANALOG_Y_MIDDLE;
+    NVS.setInt("lYMCal", LEFT_ANALOG_Y_MIDDLE);
+  }
+  if (lYSCal == 0)
+  {
+    lYSCal = LEFT_ANALOG_Y_START;
+    NVS.setInt("lYSCal", LEFT_ANALOG_Y_START);
+  }
+  if (lYECal == 0)
+  {
+    lYECal = LEFT_ANALOG_Y_END;
+    NVS.setInt("lYECal", LEFT_ANALOG_Y_END);
+  }
 
-  if (rXMCal == 0) {rXMCal = RIGHT_ANALOG_X_MIDDLE; NVS.setInt("rXMCal", RIGHT_ANALOG_X_MIDDLE);}
-  if (rXSCal == 0) {rXSCal = RIGHT_ANALOG_X_START;  NVS.setInt("rXSCal", RIGHT_ANALOG_X_START);}
-  if (rXECal == 0) {rXECal = RIGHT_ANALOG_X_END;    NVS.setInt("rXECal", RIGHT_ANALOG_X_END);}
+  if (rXMCal == 0)
+  {
+    rXMCal = RIGHT_ANALOG_X_MIDDLE;
+    NVS.setInt("rXMCal", RIGHT_ANALOG_X_MIDDLE);
+  }
+  if (rXSCal == 0)
+  {
+    rXSCal = RIGHT_ANALOG_X_START;
+    NVS.setInt("rXSCal", RIGHT_ANALOG_X_START);
+  }
+  if (rXECal == 0)
+  {
+    rXECal = RIGHT_ANALOG_X_END;
+    NVS.setInt("rXECal", RIGHT_ANALOG_X_END);
+  }
 
-  if (rYMCal == 0) {rYMCal = RIGHT_ANALOG_Y_MIDDLE; NVS.setInt("rYMCal", RIGHT_ANALOG_Y_MIDDLE);}
-  if (rYSCal == 0) {rYSCal = RIGHT_ANALOG_Y_START;  NVS.setInt("rYSCal", RIGHT_ANALOG_Y_START);}
-  if (rYECal == 0) {rYECal = RIGHT_ANALOG_Y_END;    NVS.setInt("rYECal", RIGHT_ANALOG_Y_END);}
+  if (rYMCal == 0)
+  {
+    rYMCal = RIGHT_ANALOG_Y_MIDDLE;
+    NVS.setInt("rYMCal", RIGHT_ANALOG_Y_MIDDLE);
+  }
+  if (rYSCal == 0)
+  {
+    rYSCal = RIGHT_ANALOG_Y_START;
+    NVS.setInt("rYSCal", RIGHT_ANALOG_Y_START);
+  }
+  if (rYECal == 0)
+  {
+    rYECal = RIGHT_ANALOG_Y_END;
+    NVS.setInt("rYECal", RIGHT_ANALOG_Y_END);
+  }
 
   NVS.commit();
 
@@ -579,6 +645,17 @@ void setup()
 
   inputs.init();
 
+  if (!digitalRead(BUTTON_CONFIRM_PIN))
+  {
+    display.clear();
+    display.setCursor(0, 0);
+    display.print(" Erasing NVS... ");
+    NVS.eraseAll(true);
+    NVS.commit();
+    delay(1000);
+    ESP.restart();
+  }
+
   inputs.setPWMs(fSteer, bSteer, fDrive, bDrive);
   inputs.setCalibrationValues(lXMCal, lXSCal, lXECal, lYMCal, lYSCal, lYECal, rXMCal, rXSCal, rXECal, rYMCal, rYSCal, rYECal);
 
@@ -594,7 +671,114 @@ bool nothingPressed()
   return !(inputs.getButtonValue(ANALOG_LEFT_BUTTON) || inputs.getButtonValue(ANALOG_RIGHT_BUTTON) || inputs.getAxisValue(ANALOG_LEFT_X) || inputs.getAxisValue(ANALOG_LEFT_Y) || inputs.getAxisValue(ANALOG_RIGHT_X) || inputs.getAxisValue(ANALOG_RIGHT_Y));
 }
 
-#ifndef CALIBRATION
+void calibrationScreen()
+{
+  display.clear();
+  delay(1000);
+  display.setCursor(0, 0);
+  display.print(" Move left stick");
+  display.setCursor(0, 1);
+  display.print("   in circles   ");
+
+  int LeftXMin = analogRead(LEFT_ANALOG_X_PIN);
+  int LeftXMax = LeftXMin;
+  int LeftXMiddle = LeftXMin;
+  int LeftYMin = analogRead(LEFT_ANALOG_Y_PIN);
+  int LeftYMax = LeftYMin;
+  int LeftYMiddle = LeftYMin;
+
+  int RightXMin = analogRead(RIGHT_ANALOG_X_PIN);
+  int RightXMax = RightXMin;
+  int RightXMiddle = RightXMin;
+  int RightYMin = analogRead(RIGHT_ANALOG_Y_PIN);
+  int RightYMax = RightYMin;
+  int RightYMiddle = RightYMin;
+
+  bool confirm_pressed = false;
+
+  while (!confirm_pressed)
+  {
+    confirm_pressed = !digitalRead(BUTTON_CONFIRM_PIN);
+    auto rawLeftX = analogRead(LEFT_ANALOG_X_PIN);
+    auto rawLeftY = analogRead(LEFT_ANALOG_Y_PIN);
+
+    // Max
+    if (rawLeftX > LeftXMax)
+      LeftXMax = rawLeftX;
+    if (rawLeftY > LeftYMax)
+      LeftYMax = rawLeftY;
+
+    // Min
+    if (rawLeftX < LeftXMin)
+      LeftXMin = rawLeftX;
+    if (rawLeftY < LeftYMin)
+      LeftYMin = rawLeftY;
+
+    display.setCursor(0, 0);
+    display.printf("%i<LX<%i       ", LeftXMin, LeftXMax);
+
+    display.setCursor(0, 1);
+    display.printf("%i<LY<%i       ", LeftYMin, LeftYMax);
+    delay(10);
+  }
+  display.clear();
+  Serial.printf("lx: [%i < rawLeftX < %i] ly: [%i < rawLeftY < %i] Middle: [%i,%i]\n", LeftXMin, LeftXMax, LeftYMin, LeftYMax, LeftXMiddle, LeftYMiddle);
+
+  confirm_pressed = false;
+
+  delay(1000);
+
+  while (!confirm_pressed)
+  {
+    confirm_pressed = !digitalRead(BUTTON_CONFIRM_PIN);
+    auto rawRightX = analogRead(RIGHT_ANALOG_X_PIN);
+    auto rawRightY = analogRead(RIGHT_ANALOG_Y_PIN);
+
+    // Max
+    if (rawRightX > RightXMax)
+      RightXMax = rawRightX;
+    if (rawRightY > RightYMax)
+      RightYMax = rawRightY;
+
+    // Min
+    if (rawRightX < RightXMin)
+      RightXMin = rawRightX;
+    if (rawRightY < RightYMin)
+      RightYMin = rawRightY;
+
+    display.setCursor(0, 0);
+    display.printf("%i<RX<%i       ", RightXMin, RightXMax);
+
+    display.setCursor(0, 1);
+    display.printf("%i<RY<%i       ", RightYMin, RightYMax);
+    delay(10);
+  }
+  display.clear();
+  Serial.printf("lx: [%i < rawRightX < %i] ly: [%i < rawRightY < %i] Middle: [%i,%i]\n", RightXMin, RightXMax, RightYMin, RightYMax, RightXMiddle, RightYMiddle);
+
+  NVS.setInt("lXMCal", LeftXMiddle);
+  NVS.setInt("lXSCal", LeftXMin);
+  NVS.setInt("lXECal", LeftXMax);
+
+  NVS.setInt("lYMCal", LeftYMiddle);
+  NVS.setInt("lYSCal", LeftYMin);
+  NVS.setInt("lYECal", LeftYMax);
+
+  NVS.setInt("rXMCal", RightXMiddle);
+  NVS.setInt("rXSCal", RightXMin);
+  NVS.setInt("rXECal", RightXMax);
+
+  NVS.setInt("rYMCal", RightYMiddle);
+  NVS.setInt("rYSCal", RightYMin);
+  NVS.setInt("rYECal", RightYMax);
+
+  NVS.commit();
+
+  delay(1000);
+
+  menu.switchMenu(MENU_MAIN);
+}
+
 void loop()
 {
   handleScroll();
@@ -654,29 +838,3 @@ void loop()
     }
   }
 }
-#else
-int calib = 0;
-
-int left_x_max = 4095;
-int left_y_max = 4095;
-int right_x_max = 4095;
-int right_y_max = 4095;
-
-void loop()
-{
-  auto raw_lx = analogRead(LEFT_ANALOG_X_PIN);
-  auto raw_ly = analogRead(LEFT_ANALOG_Y_PIN);
-  auto raw_rx = analogRead(RIGHT_ANALOG_X_PIN);
-  auto raw_ry = analogRead(RIGHT_ANALOG_Y_PIN);
-
-  left_x_max = raw_lx;
-  left_y_max = raw_ly;
-  right_x_max = raw_rx;
-  right_y_max = raw_ry;
-
-  display.setCursor(0, 0);
-  display.printf("lx:%i ly:%i   ", left_x_max, left_y_max);
-  display.setCursor(0, 1);
-  display.printf("rx:%i ry:%i   ", right_x_max, right_y_max);
-}
-#endif
