@@ -14,11 +14,12 @@ const char* DRIVING_MODES_TEXT[3] = {
 };
 
 void scanForDevices();
-void showBobbycarList(uint index);
+void showBobbycarList(uint);
 int countBobbycarsFound();
-void connectToBobbycar(uint index);
+void connectToBobbycar(uint);
+void connectToBobbycar(uint, bool);
 void resetScrollDisplay();
-void showConnected(uint index);
+void showConnected(uint);
 String buildEmptyMessage();
 void calibrationScreen();
 

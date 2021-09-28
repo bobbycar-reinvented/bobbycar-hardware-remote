@@ -207,11 +207,11 @@ private:
         switch (analog_stick_mode)
         {
         case STICK_MODE_BOTH:
-            return (LEFT_X_VAL / 100.f);
+            return (RIGHT_Y_VAL / 100.f);
             break;
 
         case STICK_MODE_RIGHT:
-            return (RIGHT_X_VAL / 100.f);
+            return (RIGHT_Y_VAL / 100.f);
             break;
 
         default: // STICK_MODE_LEFT
@@ -225,11 +225,11 @@ private:
         switch (analog_stick_mode)
         {
         case STICK_MODE_BOTH:
-            return (RIGHT_Y_VAL / 100.f);
+            return (LEFT_Y_VAL / 100.f);
             break;
 
         case STICK_MODE_RIGHT:
-            return (RIGHT_Y_VAL / 100.f);
+            return (RIGHT_X_VAL / 100.f);
             break;
 
         default: // STICK_MODE_LEFT

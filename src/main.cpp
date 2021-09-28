@@ -462,8 +462,10 @@ String buildRemoteMessage()
   serializeJson(doc, output);
   return output;
 }
-
-void connectToBobbycar(uint index)
+void connectToBobbycar(uint index) {
+  connectToBobbycar(index, false);
+}
+void connectToBobbycar(uint index, bool reconnect)
 {
   auto name = bobbycar_names[index];
   auto uuid = bobbycar_uuids[index];
@@ -478,7 +480,12 @@ void connectToBobbycar(uint index)
   }
   else
   {
+    if (reconnect == false) {
+      Serial.println("Failed to connect, trying again...");
+      connectToBobbycar(index, true);
+    } else {
     Serial.println("Failed to connect");
+    }
   }
 }
 
@@ -804,13 +811,19 @@ void loop()
     }
     else if (100 < timer && timer < 200)
     {
-
       display.setCursor(0, 1);
       char buf2[30];
       snprintf(buf2, 30, "f:%.1fC b:%.1fC         ", pBLETemperatures[0], pBLETemperatures[1]);
       display.print(String(buf2).substring(0, 15));
     }
-    else if (timer > 200)
+    else if (200 < timer && timer < 300)
+    {
+      display.setCursor(0, 1);
+      char buf2[30];
+      snprintf(buf2, 30, "f:%.1fV b:%.1fV         ", pBLEVoltages[0], pBLEVoltages[1]);
+      display.print(String(buf2).substring(0, 15));
+    }
+    else if (timer > 300)
     {
       timer = 0;
     }
