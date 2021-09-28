@@ -172,6 +172,19 @@ public:
         rYEnd = rightYEnd;
     }
 
+    void setDrivingMode(int DRIVING_MODE) {
+        if (DRIVING_MODE == STICK_MODE_LEFT || DRIVING_MODE == STICK_MODE_RIGHT || DRIVING_MODE == STICK_MODE_BOTH) {
+            analog_stick_mode = DRIVING_MODE;
+        } else {
+            analog_stick_mode = STICK_MODE_LEFT;
+        }
+        NVS.setInt("driveMode", analog_stick_mode);
+    }
+
+    int getDrivingMode() {
+        return analog_stick_mode;
+    }
+
 private:
     int lXMiddle = LEFT_ANALOG_X_MIDDLE;
     int lXStart = LEFT_ANALOG_X_START;

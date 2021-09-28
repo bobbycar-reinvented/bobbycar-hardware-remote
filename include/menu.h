@@ -4,6 +4,14 @@
 #define MENU_SELECT_BOBBYCAR 1U
 #define MENU_CONNECTED_TO_BOBBYCAR 2U
 #define MENU_CALIBRASTE_ANALOG_STICKS 3U
+#define MENU_SET_PWM 4U
+#define MENU_SET_DRIVING_MODE 5U
+
+const char* DRIVING_MODES_TEXT[3] = {
+    "DRIVEMODE_BOTH",
+    "DRIVEMODE_LEFT",
+    "DRIVEMODE_RIGHT"
+};
 
 void scanForDevices();
 void showBobbycarList(uint index);
@@ -27,6 +35,7 @@ public:
         menu_index = new_index;
         resetScrollDisplay();
         update_menu();
+        delay(150);
     }
 
     void confirm()
@@ -45,6 +54,13 @@ public:
         case MENU_CALIBRASTE_ANALOG_STICKS:
             calibrationScreen();
             break;
+        
+        case MENU_SET_DRIVING_MODE:
+            auto current_mode = inputs.getDrivingMode();
+            if (current_mode == STICK_MODE_LEFT) {inputs.setDrivingMode(STICK_MODE_RIGHT);}
+            else if (current_mode == STICK_MODE_RIGHT) {inputs.setDrivingMode(STICK_MODE_BOTH);}
+            else if (current_mode == STICK_MODE_BOTH) {inputs.setDrivingMode(STICK_MODE_LEFT);}
+            update_menu();
         }
     }
 
@@ -96,6 +112,10 @@ public:
         case MENU_CALIBRASTE_ANALOG_STICKS:
             switchMenu(MENU_MAIN);
             break;
+
+        case MENU_SET_DRIVING_MODE:
+            switchMenu(MENU_CONNECTED_TO_BOBBYCAR);
+            break;
         }
     }
 
@@ -113,6 +133,10 @@ public:
                 MENU_SELECT_BOBBYCAR_INDEX++;
                 update_menu(false);
             }
+            break;
+
+        case MENU_CONNECTED_TO_BOBBYCAR:
+            switchMenu(MENU_SET_DRIVING_MODE);
             break;
         }
     }
@@ -163,6 +187,14 @@ private:
             display.print("  Press confirm ");
             display.setCursor(0, 1);
             display.print("  to calibrate. ");
+            break;
+
+        case MENU_SET_DRIVING_MODE:
+            display.clear();
+            display.setCursor(0,0);
+            display.print("Mode:");
+            display.setCursor(0,1);
+            display.print(DRIVING_MODES_TEXT[inputs.getDrivingMode()]);
             break;
 
         default:

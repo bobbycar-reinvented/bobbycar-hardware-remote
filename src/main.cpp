@@ -642,6 +642,8 @@ void setup()
   inputs.setPin(ANALOG_RIGHT_Y, RIGHT_ANALOG_Y_PIN);
   inputs.setPin(ANALOG_RIGHT_BUTTON, RIGHT_ANALOG_BTN_PIN);
 
+  inputs.setDrivingMode(NVS.getInt("driveMode"));
+
   inputs.init();
 
   if (!digitalRead(BUTTON_CONFIRM_PIN))
