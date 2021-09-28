@@ -13,6 +13,5 @@ Features (When it is done):
 The reason why there are buttons and a rotary encoder is more freedom in designing the software. If you have all the sensors etc. you don't have to worry about the user experience so much as you can just use a different mapping.
 
 ToDo:
-  - Analog stick calibration into NVS
   - "Set PWM" screen
   - "Set driving mode" screen (left, right, both)

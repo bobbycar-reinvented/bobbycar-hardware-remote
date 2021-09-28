@@ -495,7 +495,6 @@ void setup()
   display.print("Booting...");
   display.setCursor(0, 1);
   display.print("Bobbycar Remote");
-  delay(10);
 
   // NVS
   display.setCursor(0, 0);
