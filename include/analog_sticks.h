@@ -144,16 +144,51 @@ public:
         auto raw_rx = analogRead(RIGHT_X_PIN);
         auto raw_ry = analogRead(RIGHT_Y_PIN);
 
-        LEFT_X_VAL = mapAnalogStick(LEFT_ANALOG_X_MIDDLE, LEFT_ANALOG_X_START, LEFT_ANALOG_X_END, raw_lx);
-        LEFT_Y_VAL = mapAnalogStick(LEFT_ANALOG_Y_MIDDLE, LEFT_ANALOG_Y_START, LEFT_ANALOG_Y_END, raw_ly);
-        RIGHT_X_VAL = mapAnalogStick(RIGHT_ANALOG_X_MIDDLE, RIGHT_ANALOG_X_START, RIGHT_ANALOG_X_END, raw_rx);
-        RIGHT_Y_VAL = mapAnalogStick(RIGHT_ANALOG_Y_MIDDLE, RIGHT_ANALOG_Y_START, RIGHT_ANALOG_Y_END, raw_ry);
+        LEFT_X_VAL = mapAnalogStick(lXMiddle, lXStart, lXEnd, raw_lx);
+        LEFT_Y_VAL = mapAnalogStick(lYMiddle, lYStart, lYEnd, raw_ly);
+        RIGHT_X_VAL = mapAnalogStick(rXMiddle, rXStart, rXEnd, raw_rx);
+        RIGHT_Y_VAL = mapAnalogStick(rYMiddle, rYStart, rYEnd, raw_ry);
 
         LEFT_BUTTON_VAL = !digitalRead(LEFT_BUTTON_PIN);
         RIGHT_BUTTON_VAL = !digitalRead(RIGHT_BUTTON_PIN);
     }
 
+    void setCalibrationValues(int leftXMiddle, int leftXStart, int leftXEnd, int leftYMiddle, int leftYStart, int leftYEnd, int rightXMiddle, int rightXStart, int rightXEnd, int rightYMiddle, int rightYStart, int rightYEnd)
+    {
+        lXMiddle = leftXMiddle;
+        lXStart = leftXStart;
+        lXEnd = leftXEnd;
+
+        lYMiddle = leftYMiddle;
+        lYStart = leftYStart;
+        lYEnd = leftYEnd;
+
+        rXMiddle = rightXMiddle;
+        rXStart = rightXStart;
+        rXEnd = rightXEnd;
+
+        rYMiddle = rightYMiddle;
+        rYStart = rightYStart;
+        rYEnd = rightYEnd;
+    }
+
 private:
+    int lXMiddle = LEFT_ANALOG_X_MIDDLE;
+    int lXStart = LEFT_ANALOG_X_START;
+    int lXEnd = LEFT_ANALOG_X_END;
+
+    int lYMiddle = LEFT_ANALOG_Y_MIDDLE;
+    int lYStart = LEFT_ANALOG_Y_START;
+    int lYEnd = LEFT_ANALOG_Y_END;
+
+    int rXMiddle = RIGHT_ANALOG_X_MIDDLE;
+    int rXStart = RIGHT_ANALOG_X_START;
+    int rXEnd = RIGHT_ANALOG_X_END;
+
+    int rYMiddle = RIGHT_ANALOG_Y_MIDDLE;
+    int rYStart = RIGHT_ANALOG_Y_START;
+    int rYEnd = RIGHT_ANALOG_Y_END;
+
     float getX()
     {
         switch (analog_stick_mode)

@@ -1,5 +1,8 @@
 #include <Arduino.h>
 
+// NVS
+#include <ArduinoNvs.h>
+
 // Scroll text
 String firstLine = "";
 String secondLine = "";
@@ -481,7 +484,6 @@ void connectToBobbycar(uint index)
 
 void setup()
 {
-
   Serial.begin(BAUD_RATE);
   Serial.println("Booting...");
 
@@ -494,6 +496,53 @@ void setup()
   display.setCursor(0, 1);
   display.print("Bobbycar Remote");
   delay(10);
+
+  // NVS
+  NVS.begin();
+  int fSteer = NVS.getInt("fSteer");
+  int bSteer = NVS.getInt("bSteer");
+  int fDrive = NVS.getInt("fDrive");
+  int bDrive = NVS.getInt("bDrive");
+
+  if (fSteer == 0) {fSteer = 100;NVS.setInt("fSteer", 100);}
+  if (bSteer == 0) {bSteer = 0;  NVS.setInt("bSteer",   0);}
+  if (fDrive == 0) {fDrive = 75; NVS.setInt("fDrive",  75);}
+  if (bDrive == 0) {bDrive = 100;NVS.setInt("bDrive", 100);}
+
+// Load calibration
+  int lXMCal = NVS.getInt("lXMCal"); // lXM leftXMiddle
+  int lXSCal = NVS.getInt("lXSCal"); // lXS leftXStart
+  int lXECal = NVS.getInt("lXECal"); // lXE leftXEnd
+
+  int lYMCal = NVS.getInt("lYMCal");
+  int lYSCal = NVS.getInt("lYSCal");
+  int lYECal = NVS.getInt("lYECal");
+
+  int rXMCal = NVS.getInt("rXMCal");
+  int rXSCal = NVS.getInt("rXSCal");
+  int rXECal = NVS.getInt("rXECal");
+
+  int rYMCal = NVS.getInt("rYMCal");
+  int rYSCal = NVS.getInt("rYSCal");
+  int rYECal = NVS.getInt("rYECal");
+
+  if (lXMCal == 0) {lXMCal = LEFT_ANALOG_X_MIDDLE; NVS.setInt("lXMCal", LEFT_ANALOG_X_MIDDLE);}
+  if (lXSCal == 0) {lXSCal = LEFT_ANALOG_X_START;  NVS.setInt("lXSCal", LEFT_ANALOG_X_START);}
+  if (lXECal == 0) {lXECal = LEFT_ANALOG_X_END;    NVS.setInt("lXECal", LEFT_ANALOG_X_END);}
+
+  if (lYMCal == 0) {lYMCal = LEFT_ANALOG_Y_MIDDLE; NVS.setInt("lYMCal", LEFT_ANALOG_Y_MIDDLE);}
+  if (lYSCal == 0) {lYSCal = LEFT_ANALOG_Y_START;  NVS.setInt("lYSCal", LEFT_ANALOG_Y_START);}
+  if (lYECal == 0) {lYECal = LEFT_ANALOG_Y_END;    NVS.setInt("lYECal", LEFT_ANALOG_Y_END);}
+
+  if (rXMCal == 0) {rXMCal = RIGHT_ANALOG_X_MIDDLE; NVS.setInt("rXMCal", RIGHT_ANALOG_X_MIDDLE);}
+  if (rXSCal == 0) {rXSCal = RIGHT_ANALOG_X_START;  NVS.setInt("rXSCal", RIGHT_ANALOG_X_START);}
+  if (rXECal == 0) {rXECal = RIGHT_ANALOG_X_END;    NVS.setInt("rXECal", RIGHT_ANALOG_X_END);}
+
+  if (rYMCal == 0) {rYMCal = RIGHT_ANALOG_Y_MIDDLE; NVS.setInt("rYMCal", RIGHT_ANALOG_Y_MIDDLE);}
+  if (rYSCal == 0) {rYSCal = RIGHT_ANALOG_Y_START;  NVS.setInt("rYSCal", RIGHT_ANALOG_Y_START);}
+  if (rYECal == 0) {rYECal = RIGHT_ANALOG_Y_END;    NVS.setInt("rYECal", RIGHT_ANALOG_Y_END);}
+
+  NVS.commit();
 
   // BLE
   display.setCursor(0, 0);
@@ -529,6 +578,9 @@ void setup()
   inputs.setPin(ANALOG_RIGHT_BUTTON, RIGHT_ANALOG_BTN_PIN);
 
   inputs.init();
+
+  inputs.setPWMs(fSteer, bSteer, fDrive, bDrive);
+  inputs.setCalibrationValues(lXMCal, lXSCal, lXECal, lYMCal, lYSCal, lYECal, rXMCal, rXSCal, rXECal, rYMCal, rYSCal, rYECal);
 
   // Setup done
   display.setCursor(0, 0);

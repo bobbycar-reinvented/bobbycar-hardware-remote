@@ -3,6 +3,7 @@
 #define MENU_MAIN 0U
 #define MENU_SELECT_BOBBYCAR 1U
 #define MENU_CONNECTED_TO_BOBBYCAR 2U
+#define MENU_CALIBRASTE_ANALOG_STICKS 3U
 
 void scanForDevices();
 void showBobbycarList(uint index);
