@@ -444,11 +444,11 @@ String buildRemoteMessage()
   {
     blink = 3;
   }
-  else if (leftStickButton && !rightStickButton)
+  else if (!leftStickButton && rightStickButton)
   {
     blink = 2;
   }
-  else if (!leftStickButton && rightStickButton)
+  else if (leftStickButton && !rightStickButton)
   {
     blink = 1;
   }
@@ -676,7 +676,7 @@ void setup()
 
 bool nothingPressed()
 {
-  return !(inputs.getButtonValue(ANALOG_LEFT_BUTTON) || inputs.getButtonValue(ANALOG_RIGHT_BUTTON) || inputs.getAxisValue(ANALOG_LEFT_X) || inputs.getAxisValue(ANALOG_LEFT_Y) || inputs.getAxisValue(ANALOG_RIGHT_X) || inputs.getAxisValue(ANALOG_RIGHT_Y));
+  return !(inputs.getButtonValue(ANALOG_LEFT_BUTTON) || inputs.getButtonValue(ANALOG_RIGHT_BUTTON) || abs(inputs.getAxisValue(ANALOG_LEFT_X)) > 30 || abs(inputs.getAxisValue(ANALOG_LEFT_Y)) > 30 || abs(inputs.getAxisValue(ANALOG_RIGHT_X)) > 30 || abs(inputs.getAxisValue(ANALOG_RIGHT_Y)) > 30);
 }
 
 void calibrationScreen()
@@ -829,26 +829,30 @@ void loop()
     }
     timer++;
   }
-  if (menu.getMenu() == MENU_CONNECTED_TO_BOBBYCAR && bobbycarSupportsRemoteControl)
-  {
-    if (pRemotecontrolCharacteristic != nullptr)
+
+  static auto last_update = millis();
+  auto now = millis();
+    if (menu.getMenu() == MENU_CONNECTED_TO_BOBBYCAR && bobbycarSupportsRemoteControl)
     {
-      if (pRemotecontrolCharacteristic->canWrite())
+      if (pRemotecontrolCharacteristic != nullptr)
       {
-        static bool alreadySentEmptyMessage = true;
-        if (!nothingPressed())
+        if (pRemotecontrolCharacteristic->canWrite())
         {
-          alreadySentEmptyMessage = false;
-          std::string sendToBobbycar = buildRemoteMessage().c_str();
-          pRemotecontrolCharacteristic->writeValue(sendToBobbycar);
-        }
-        else if (alreadySentEmptyMessage == false)
-        {
-          alreadySentEmptyMessage = true;
-          std::string emptyMessage = buildEmptyMessage().c_str();
-          pRemotecontrolCharacteristic->writeValue(emptyMessage);
+          static int alreadySentEmptyMessage = 0;
+          if (!nothingPressed() && (last_update + 15 < now))
+          {
+            last_update = now;
+            alreadySentEmptyMessage = 5;
+            std::string sendToBobbycar = buildRemoteMessage().c_str();
+            pRemotecontrolCharacteristic->writeValue(sendToBobbycar);
+          }
+          else if (nothingPressed() && alreadySentEmptyMessage > 0)
+          {
+            alreadySentEmptyMessage--;
+            std::string emptyMessage = buildEmptyMessage().c_str();
+            pRemotecontrolCharacteristic->writeValue(emptyMessage);
+          }
         }
       }
-    }
   }
 }
