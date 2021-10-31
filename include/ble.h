@@ -43,7 +43,7 @@ class BobbyCarBLEScanCallback : public BLEAdvertisedDeviceCallbacks
     if (advertisedDevice->haveName())
     {
       String name = String(advertisedDevice->getName().c_str());
-      if (String(name).indexOf("bobby") > 0 && advertisedDevice->getServiceUUID() == bobbycar_service)
+      if (String(name).indexOf("bobby") != -1 && advertisedDevice->getServiceUUID() == bobbycar_service)
       {
         add_bobbycar(advertisedDevice);
       } else {
