@@ -800,27 +800,27 @@ void loop()
     if (0 < timer && timer < 100)
     {
       display.setCursor(0, 0);
-      char buf1[30];
-      snprintf(buf1, 30, "%.2fkm/h [%u%u%u%u]     ", bobbycarAvgSpeed, pBLEErrors[0], pBLEErrors[1], pBLEErrors[2], pBLEErrors[3]);
+      char buf1[32];
+      snprintf(buf1, 32, "%.2fkm/h [%u%u%u%u]       ", bobbycarAvgSpeed, pBLEErrors[0], pBLEErrors[1], pBLEErrors[2], pBLEErrors[3]);
       display.print(String(buf1).substring(0, 15));
 
       display.setCursor(0, 1);
-      char buf2[30];
-      snprintf(buf2, 30, "%.1fW  %.1fA            ", bobbycarTotalPower, bobbycarTotalCurrent);
+      char buf2[32];
+      snprintf(buf2, 32, "%.1fW  %.1fA              ", bobbycarTotalPower, bobbycarTotalCurrent);
       display.print(String(buf2).substring(0, 15));
     }
     else if (100 < timer && timer < 200)
     {
       display.setCursor(0, 1);
-      char buf2[30];
-      snprintf(buf2, 30, "f:%.1fC b:%.1fC         ", pBLETemperatures[0], pBLETemperatures[1]);
+      char buf2[32];
+      snprintf(buf2, 32, "f:%.1fC b:%.1fC           ", pBLETemperatures[0], pBLETemperatures[1]);
       display.print(String(buf2).substring(0, 15));
     }
     else if (200 < timer && timer < 300)
     {
       display.setCursor(0, 1);
-      char buf2[30];
-      snprintf(buf2, 30, "f:%.1fV b:%.1fV         ", pBLEVoltages[0], pBLEVoltages[1]);
+      char buf2[32];
+      snprintf(buf2, 32, "f:%.1fV b:%.1fV           ", pBLEVoltages[0], pBLEVoltages[1]);
       display.print(String(buf2).substring(0, 15));
     }
     else if (timer > 300)
